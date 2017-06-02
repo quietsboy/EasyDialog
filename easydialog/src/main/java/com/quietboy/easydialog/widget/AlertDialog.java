@@ -2,6 +2,8 @@ package com.quietboy.easydialog.widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.annotation.ColorRes;
+import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,6 +111,47 @@ public class AlertDialog {
         public Builder setNegativeButton(String text,
                                          final OnClickListener listener) {
             showNegBtn = true;
+            if ("".equals(text)) {
+                btn_neg.setText("取消");
+            } else {
+                btn_neg.setText(text);
+            }
+            btn_neg.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    if (listener != null)
+                        listener.onClick(v);
+                }
+            });
+            return this;
+        }
+
+        public Builder setPositiveButton(String text, @ColorRes int color,
+                                         final OnClickListener listener) {
+            showPosBtn = true;
+            btn_pos.setTextColor(ContextCompat.getColor(context,color));
+            if ("".equals(text)) {
+                btn_pos.setText("确定");
+            } else {
+                btn_pos.setText(text);
+            }
+            btn_pos.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    if (listener != null) {
+                        listener.onClick(v);
+                    }
+                }
+            });
+            return this;
+        }
+
+        public Builder setNegativeButton(String text, @ColorRes int color,
+                                         final OnClickListener listener) {
+            showNegBtn = true;
+            btn_neg.setTextColor(ContextCompat.getColor(context,color));
             if ("".equals(text)) {
                 btn_neg.setText("取消");
             } else {
